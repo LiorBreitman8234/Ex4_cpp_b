@@ -11,19 +11,19 @@ namespace coup{
                 this->game.killPlayer(*playerV);
             }
         }
-        if(this->currentCoins < 3)
+        if(this->currentCoins < ASSASSINATION)
         {
             throw std::logic_error("cant assassinate with less then 3 coins");
         }
-        if(this->currentCoins > 6)
+        if(this->currentCoins >= COUP)
         {
-            this->currentCoins -= 7;
+            this->currentCoins -= COUP;
             this->lastAction = "kill";
             this->lastKilled = player.nameP;
         }
         else
         {
-            this->currentCoins -= 3;
+            this->currentCoins -= ASSASSINATION;
             this->lastAction = "assassination";
             this->lastKilled = player.nameP;
             player.state = "assassinated by " + this->nameP;

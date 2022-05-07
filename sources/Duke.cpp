@@ -24,7 +24,7 @@ namespace coup{
         {
             throw std::logic_error("more then 10 coins, must coup");
         }
-        this->currentCoins += 3;
+        this->currentCoins += TAX;
         this->game.moveTurn();
         this->lastAction = "tax";
     }

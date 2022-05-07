@@ -22,7 +22,7 @@ namespace coup{
 
     std::vector<std::string> Game::players() {
         std::vector<std::string> names;
-        for(auto & gamePlayer : this->gamePlayers)
+        for(const auto & gamePlayer : this->gamePlayers)
         {
             names.push_back(gamePlayer->nameP);
         }

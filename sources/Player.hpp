@@ -12,6 +12,8 @@
 #include "Game.hpp"
 #define COUP 7
 #define MUST_COUP 10
+#define ASSASSINATION 3
+#define TAX 3
 namespace coup{
     class Game;
     class Player{
