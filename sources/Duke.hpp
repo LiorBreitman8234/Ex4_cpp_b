@@ -11,7 +11,7 @@ namespace coup{
 
     public:
         Duke(Game& game, std::string name);
-        void block(Player& player);
+        static void block(Player& player);
         void tax();
     };
 }

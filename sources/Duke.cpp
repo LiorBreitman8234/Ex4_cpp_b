@@ -20,6 +20,10 @@ namespace coup{
 
     void Duke::tax() {
         this->game.checkTurn(*this);
+        if(this->currentCoins >= MUST_COUP)
+        {
+            throw std::logic_error("more then 10 coins, must coup");
+        }
         this->currentCoins += 3;
         this->game.moveTurn();
         this->lastAction = "tax";

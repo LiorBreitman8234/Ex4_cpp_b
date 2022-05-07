@@ -11,6 +11,7 @@
 #include "string"
 #include "Game.hpp"
 #define COUP 7
+#define MUST_COUP 10
 namespace coup{
     class Game;
     class Player{
