@@ -26,6 +26,7 @@ namespace coup{
         void killPlayer(Player& player);
         std::string turn();
         void moveTurn();
+        std::string winner();
         Game& operator=(const Game& other);
     };
 }

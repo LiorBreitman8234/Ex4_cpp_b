@@ -100,4 +100,12 @@ namespace coup{
         this->countPlayers += 1;
     }
 
+    std::string Game::winner() {
+        if(this->gamePlayers.size()!= 1)
+        {
+            throw std::logic_error("more the 1 player");
+        }
+        return this->gamePlayers.at(0)->nameP;
+    }
+
 }
