@@ -43,7 +43,7 @@ namespace coup{
     }
 
     Game &Game::operator=(const Game& other) {
-        for(auto & gamePlayer : other.gamePlayers)
+        for(const auto & gamePlayer : other.gamePlayers)
         {
             this->gamePlayers.push_back(gamePlayer);
         }
