@@ -3,7 +3,7 @@ namespace coup{
 
     void Player::coup(Player &player) {
         this->game.checkTurn(*this);
-        if(this->currentCoins < 7)
+        if(this->currentCoins < COUP)
         {
             throw std::logic_error("not enough coins to coup");
         }
@@ -14,6 +14,10 @@ namespace coup{
 
     void Player::foreign_aid() {
         this->game.checkTurn(*this);
+        if(this->currentCoins >= 10)
+        {
+            throw std::logic_error("more then 10 coins, must coup");
+        }
         this->currentCoins += 2;
         this->lastAction = "foreign_aid";
         this->game.moveTurn();
@@ -21,12 +25,16 @@ namespace coup{
 
     void Player::income() {
         this->game.checkTurn(*this);
+        if(this->currentCoins >= 10)
+        {
+            throw std::logic_error("more then 10 coins, must coup");
+        }
         this->currentCoins += 1;
         this->lastAction = "income";
         this->game.moveTurn();
     }
 
-    Player &Player::operator=(Player other) {
+    Player &Player::operator=(const Player& other) {
         this->currentCoins = other.currentCoins;
         this->lastAction = other.lastAction;
         this->state = other.state;

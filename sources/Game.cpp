@@ -108,4 +108,8 @@ namespace coup{
         return this->gamePlayers.at(0)->nameP;
     }
 
+    std::vector<Player*> Game::getPlayers() {
+        return this->gamePlayers;
+    }
+
 }

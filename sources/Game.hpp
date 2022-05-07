@@ -27,6 +27,7 @@ namespace coup{
         std::string turn();
         void moveTurn();
         std::string winner();
+        std::vector<Player*> getPlayers();
         Game& operator=(const Game& other);
     };
 }

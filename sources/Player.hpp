@@ -10,6 +10,7 @@
 #include "vector"
 #include "string"
 #include "Game.hpp"
+#define COUP 7
 namespace coup{
     class Game;
     class Player{
@@ -27,7 +28,7 @@ namespace coup{
         int coins()const {return this->currentCoins;};
         std::string name()const{return this->nameP;};
         std::string role()const{return this->roleP;};
-        Player& operator=(Player other);
+        Player& operator=(const Player& other);
 
     };
 }

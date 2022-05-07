@@ -15,6 +15,10 @@ namespace coup {
 
     void Captain::steal(Player &player) {
         this->game.checkTurn(*this);
+        if(this->currentCoins >= 10)
+        {
+            throw std::logic_error("more then 10 coins, must coup");
+        }
         switch (player.currentCoins) {
             case 1:
                 this->currentCoins += 1;

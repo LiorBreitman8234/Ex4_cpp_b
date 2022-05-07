@@ -2,6 +2,15 @@
 namespace coup{
     void Assassin::coup(Player &player) {
         this->game.checkTurn(*this);
+        std::vector<Player*> players = this->game.getPlayers();
+        for(auto & playerV : players)
+        {
+            // removing the players assassinated by this player from the game
+            if(playerV->state == "assassinated by " + this->nameP)
+            {
+                this->game.killPlayer(*playerV);
+            }
+        }
         if(this->currentCoins < 3)
         {
             throw std::logic_error("cant assassinate with less then 3 coins");
@@ -17,7 +26,7 @@ namespace coup{
             this->currentCoins -= 3;
             this->lastAction = "assassination";
             this->lastKilled = player.nameP;
-            player.state = "assassinated";
+            player.state = "assassinated by " + this->nameP;
         }
         this->game.moveTurn();
 

@@ -4,6 +4,10 @@
 namespace coup{
     void Ambassador::transfer(Player &takeFrom, Player &giveTo) {
         this->game.checkTurn(*this);
+        if(this->currentCoins >= 10)
+        {
+            throw std::logic_error("more then 10 coins, must coup");
+        }
         takeFrom.currentCoins-= 1;
         giveTo.currentCoins +=1;
         this->lastAction = "transfer";
