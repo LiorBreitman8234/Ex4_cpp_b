@@ -8,10 +8,19 @@ namespace coup{
         {
             throw std::logic_error("more then 10 coins, must coup");
         }
-        takeFrom.currentCoins-= 1;
-        giveTo.currentCoins +=1;
-        this->lastAction = "transfer";
-        this->game.moveTurn();
+        if(takeFrom.coins() == 0)
+        {
+            this->lastAction = "transfer";
+            this->game.moveTurn();
+        }
+        else
+        {
+            takeFrom.currentCoins-= 1;
+            giveTo.currentCoins +=1;
+            this->lastAction = "transfer";
+            this->game.moveTurn();
+        }
+
     }
     void Ambassador::block(Player &player) {
         if(player.roleP != "Captain")

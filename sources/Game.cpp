@@ -24,7 +24,10 @@ namespace coup{
         std::vector<std::string> names;
         for(const auto & gamePlayer : this->gamePlayers)
         {
-            names.push_back(gamePlayer->nameP);
+            if(gamePlayer->state == "alive")
+            {
+                names.push_back(gamePlayer->nameP);
+            }
         }
         return names;
     }
@@ -62,7 +65,7 @@ namespace coup{
 
                 if(i == this->gamePlayers.size() - 1)
                 {
-                    if(this->gamePlayers.at(0)->state == "assassinated")
+                    if(this->gamePlayers.at(0)->state.rfind("assassinated",0) == 0)
                     {
                         currentPlayer = this->gamePlayers.at(1)->nameP;
                     }
@@ -74,7 +77,7 @@ namespace coup{
                 }
                 else
                 {
-                    if(this->gamePlayers.at(i+1)->state == "assassinated")
+                    if(this->gamePlayers.at(i+1)->state.rfind("assassinated",0) == 0)
                     {
                         if(i + 2 <= this->gamePlayers.size() -1)
                         {
@@ -101,7 +104,15 @@ namespace coup{
     }
 
     std::string Game::winner() {
-        if(this->gamePlayers.size()!= 1)
+        int aliveCounter = 0;
+        for(auto & player: this->gamePlayers)
+        {
+            if(player->state == "alive")
+            {
+                aliveCounter+=1;
+            }
+        }
+        if(aliveCounter != 1)
         {
             throw std::logic_error("more the 1 player");
         }

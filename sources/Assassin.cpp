@@ -19,6 +19,7 @@ namespace coup{
         {
             this->currentCoins -= COUP;
             this->lastAction = "kill";
+            this->currentCoins-=3;
             this->lastKilled = player.nameP;
         }
         else
@@ -26,7 +27,8 @@ namespace coup{
             this->currentCoins -= ASSASSINATION;
             this->lastAction = "assassination";
             this->lastKilled = player.nameP;
-            player.state = "assassinated by " + this->nameP;
+            this->currentCoins -=3;
+            player.setState("assassinated by " + this->nameP);
         }
         this->game.moveTurn();
 

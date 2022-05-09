@@ -1,4 +1,6 @@
 #include "Contessa.hpp"
+#include "Assassin.hpp"
+
 namespace coup
 {
     Contessa::Contessa(Game &game, std::string name) : Player(game, std::move(name)) {
@@ -19,6 +21,14 @@ namespace coup
         {
             throw std::logic_error("no coup to block");
         }
-        player.state = "alive";
+        std::vector<Player*> players = this->game.getPlayers();
+        for(auto & playerV : players)
+        {
+            // removing the players assassinated by this player from the game
+            if(playerV->state == "assassinated by "+ player.nameP)
+            {
+                playerV->setState("alive");
+            }
+        }
     }
 }

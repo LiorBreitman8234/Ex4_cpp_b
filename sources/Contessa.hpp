@@ -11,7 +11,7 @@ namespace coup{
 
     public:
         Contessa(Game& game, std::string name);
-        static void block(Player& player);
+        void block(Player& player);
     };
 }
 #endif //EX4_CPP_A_CONTESSA_H

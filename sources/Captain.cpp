@@ -23,12 +23,14 @@ namespace coup {
             case 1:
                 this->currentCoins += 1;
                 player.currentCoins -=1;
+                lastSteal = 1;
                 break;
             case 0:
                 break;
             default:
                 this->currentCoins += 2;
                 player.currentCoins -=2;
+                lastSteal = 2;
                 break;
         }
         this->lastAction = "steal";

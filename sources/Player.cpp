@@ -1,4 +1,6 @@
 #include "Player.hpp"
+
+#include <utility>
 namespace coup{
 
     void Player::coup(Player &player) {
@@ -7,6 +9,7 @@ namespace coup{
         {
             throw std::logic_error("not enough coins to coup");
         }
+        player.currentCoins -= COUP;
         player.state = "dead";
         this->game.killPlayer(player);
         this->game.moveTurn();
@@ -40,5 +43,10 @@ namespace coup{
         this->state = other.state;
         this->roleP = other.roleP;
         return *this;
+    }
+
+    void Player::setState(const std::string& stateNew) {
+        this->state = stateNew;
+
     }
 }

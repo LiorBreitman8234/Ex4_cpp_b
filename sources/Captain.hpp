@@ -9,6 +9,7 @@ namespace coup{
     class Captain: public Player{
 
     public:
+        int lastSteal;
         Captain(Game& game, std::string name);
         void steal(Player& player);
         void block(Player& player);

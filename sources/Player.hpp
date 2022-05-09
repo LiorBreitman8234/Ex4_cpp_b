@@ -11,7 +11,7 @@
 #include "string"
 #include "Game.hpp"
 #define COUP 7
-#define MUST_COUP 10
+#define MUST_COUP 11
 #define ASSASSINATION 3
 #define TAX 3
 namespace coup{
@@ -32,6 +32,7 @@ namespace coup{
         std::string name()const{return this->nameP;};
         std::string role()const{return this->roleP;};
         Player& operator=(const Player& other);
+        void setState(const std::string& stateNew);
 
     };
 }
