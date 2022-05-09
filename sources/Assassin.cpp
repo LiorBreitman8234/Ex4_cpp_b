@@ -5,11 +5,15 @@ namespace coup{
         std::vector<Player*> players = this->game.getPlayers();
         for(auto & playerV : players)
         {
-            // removing the players assassinated by this player from the game
+            // removing the players assassinated by in the last round this player from the game
             if(playerV->state == "assassinated by " + this->nameP)
             {
                 this->game.killPlayer(*playerV);
             }
+        }
+        if(!this->game.checkInGame(player))
+        {
+            throw std::logic_error("player assassinated or killed already");
         }
         if(this->currentCoins < ASSASSINATION)
         {
@@ -19,15 +23,14 @@ namespace coup{
         {
             this->currentCoins -= COUP;
             this->lastAction = "kill";
-            this->currentCoins-=3;
             this->lastKilled = player.nameP;
+            this->game.killPlayer(player);
         }
         else
         {
             this->currentCoins -= ASSASSINATION;
             this->lastAction = "assassination";
             this->lastKilled = player.nameP;
-            this->currentCoins -=3;
             player.setState("assassinated by " + this->nameP);
         }
         this->game.moveTurn();

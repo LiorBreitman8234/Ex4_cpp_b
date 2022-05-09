@@ -8,9 +8,19 @@ namespace coup {
         if (player.roleP != "Captain") {
             throw std::logic_error("can only block a captain");
         }
-        if (player.lastAction == "steal") {
-            player.currentCoins -= 2;
+        if (player.lastAction.rfind("steal",0) == 0) {
+            int amountStolen = player.lastAction.at(INDEX_OF_STEAL_AMOUNT) - '0';
+            player.currentCoins -= amountStolen;
+            for(auto& play: this->game.getPlayers())
+            {
+                if(play->nameP == player.lastAction.substr(INDEX_OF_STEAL_NAME))
+                {
+                    play->currentCoins += amountStolen;
+                    break;
+                }
+            }
         }
+        throw std::logic_error("can only block steal");
     }
 
     void Captain::steal(Player &player) {
@@ -23,17 +33,18 @@ namespace coup {
             case 1:
                 this->currentCoins += 1;
                 player.currentCoins -=1;
-                lastSteal = 1;
+                this->lastAction ="steal 1 coins from "+ player.nameP;
                 break;
             case 0:
+                this->lastAction ="steal 0 coins from "+ player.nameP;
                 break;
             default:
                 this->currentCoins += 2;
                 player.currentCoins -=2;
-                lastSteal = 2;
+                this->lastAction ="steal 2 coins from "+ player.nameP;
                 break;
         }
-        this->lastAction = "steal";
+
         this->game.moveTurn();
 
     }

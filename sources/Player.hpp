@@ -14,6 +14,8 @@
 #define MUST_COUP 11
 #define ASSASSINATION 3
 #define TAX 3
+#define INDEX_OF_STEAL_AMOUNT 6
+#define INDEX_OF_STEAL_NAME 19
 namespace coup{
     class Game;
     class Player{

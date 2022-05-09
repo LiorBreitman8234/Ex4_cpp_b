@@ -10,16 +10,12 @@ namespace coup{
         }
         if(takeFrom.coins() == 0)
         {
-            this->lastAction = "transfer";
-            this->game.moveTurn();
+            throw std::logic_error("no coins to transfer");
         }
-        else
-        {
-            takeFrom.currentCoins-= 1;
-            giveTo.currentCoins +=1;
-            this->lastAction = "transfer";
-            this->game.moveTurn();
-        }
+        takeFrom.currentCoins-= 1;
+        giveTo.currentCoins +=1;
+        this->lastAction = "transfer";
+        this->game.moveTurn();
 
     }
     void Ambassador::block(Player &player) {
@@ -27,11 +23,22 @@ namespace coup{
         {
             throw std::logic_error("can only block captain");
         }
-        if(player.lastAction != "steal")
+        if(player.lastAction.rfind("steal",0) != 0)
         {
             throw std::logic_error("can only block steal");
         }
-        player.currentCoins -= 2;
+        int amountStolen = player.lastAction.at(INDEX_OF_STEAL_AMOUNT) - '0';
+        player.currentCoins -= amountStolen;
+        std::vector<Player*> players = this->game.getPlayers();
+        for(auto& play: players)
+        {
+            std::string playerName = player.lastAction.substr(INDEX_OF_STEAL_NAME);
+            if(play->nameP == playerName)
+            {
+                play->currentCoins += amountStolen;
+                break;
+            }
+        }
         this->lastAction = "block";
     }
 

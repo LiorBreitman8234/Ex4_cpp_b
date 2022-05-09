@@ -5,11 +5,16 @@ namespace coup{
 
     void Player::coup(Player &player) {
         this->game.checkTurn(*this);
+        if(!this->game.checkInGame(player))
+        {
+            throw std::logic_error("player assassinated or killed already");
+        }
         if(this->currentCoins < COUP)
         {
             throw std::logic_error("not enough coins to coup");
         }
-        player.currentCoins -= COUP;
+        this->currentCoins -= COUP;
+        this->lastAction  = "coup";
         player.state = "dead";
         this->game.killPlayer(player);
         this->game.moveTurn();

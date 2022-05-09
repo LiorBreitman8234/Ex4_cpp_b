@@ -8,6 +8,8 @@
 #include "iostream"
 #include "vector"
 #include "Player.hpp"
+#include <algorithm>
+#define MAX_PLAYERS 6
 
 namespace coup{
     class Player;
@@ -16,10 +18,13 @@ namespace coup{
         std::vector<Player*> gamePlayers;
         int countPlayers;
         int currentTurn;
+        bool isStarted;
     public:
         std::string currentPlayer;
-        Game():gamePlayers(std::vector<Player*>()),countPlayers(0),currentTurn(1){};
+        Game():gamePlayers(std::vector<Player*>()),countPlayers(0),currentTurn(1),isStarted(false){};
+        bool checkInGame(Player& player);
         int getTurn() const{return currentTurn;};
+        static bool checkNameAndState(const std::string& toFind,Player& toCheck);
         void addPlayer(Player& player);
         void checkTurn(const Player& player) const;
         std::vector<std::string> players();

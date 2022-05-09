@@ -2,6 +2,10 @@
 namespace coup{
 
     void Game::checkTurn(const Player &player) const {
+        if(this->gamePlayers.size() <= 2 && this->currentTurn == 1)
+        {
+            throw std::logic_error("not enough players");
+        }
         if(this->currentPlayer != player.nameP)
         {
             throw std::logic_error("wrong player turn");
@@ -57,7 +61,10 @@ namespace coup{
     }
 
     void Game::moveTurn() {
-
+        if(!this->isStarted)
+        {
+            this->isStarted = true;
+        }
         for(size_t i =0; i < this->gamePlayers.size();i++)
         {
             if(this->currentPlayer == this->gamePlayers.at(i)->nameP)
@@ -71,6 +78,7 @@ namespace coup{
                     }
                     else
                     {
+                        this->currentTurn++;
                         currentPlayer = this->gamePlayers.at(0)->nameP;
 
                     }
@@ -85,6 +93,7 @@ namespace coup{
                         }
                         else
                         {
+                            this->currentTurn++;
                             currentPlayer = this->gamePlayers.at(0)->nameP;
                         }
                     }
@@ -99,11 +108,24 @@ namespace coup{
     }
 
     void Game::addPlayer(Player& player) {
+        if(this->gamePlayers.size() == MAX_PLAYERS)
+        {
+            throw std::logic_error("cant have more then 6 players");
+        }
+        if(this->isStarted)
+        {
+            throw std::logic_error("cant had players in the middle of the game");
+
+        }
         this->gamePlayers.push_back(&player);
         this->countPlayers += 1;
     }
 
     std::string Game::winner() {
+        if(this->currentTurn == 1)
+        {
+            throw std::logic_error("game didnt start");
+        }
         int aliveCounter = 0;
         for(auto & player: this->gamePlayers)
         {
@@ -114,13 +136,34 @@ namespace coup{
         }
         if(aliveCounter != 1)
         {
-            throw std::logic_error("more the 1 player");
+            throw std::logic_error("more then 1 player alive");
+        }
+        for(auto & player: this->gamePlayers)
+        {
+            if(player->state == "alive")
+            {
+                return player->nameP;
+            }
         }
         return this->gamePlayers.at(0)->nameP;
     }
 
     std::vector<Player*> Game::getPlayers() {
         return this->gamePlayers;
+    }
+    bool Game::checkNameAndState(const std::string& toFind,Player& toCheck){
+        return toFind == toCheck.nameP && toCheck.state == "alive";
+    }
+    bool Game::checkInGame(Player& player) {
+        //return std::any_of(this->gamePlayers.begin(),this->gamePlayers.end(),[&player](Player play){return checkNameAndState(player.nameP,play);});
+        for(auto &play:this->gamePlayers)
+        {
+            if(checkNameAndState(player.nameP,*play))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
