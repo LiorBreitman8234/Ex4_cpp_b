@@ -2,6 +2,8 @@
 namespace coup{
 
     void Game::checkTurn(const Player &player) const {
+        //this function is used to check whether the right player tried to do a move
+        // or if the game has enough players to start
         if(this->gamePlayers.size() <= 2 && this->currentTurn == 1)
         {
             throw std::logic_error("not enough players");
@@ -14,6 +16,10 @@ namespace coup{
     }
 
     void Game::killPlayer(Player &player) {
+        /*
+         * this function is used to remove players that were the target of a coup
+         * or were assassinated and can't come back
+         */
         for(size_t i =0; i < this->gamePlayers.size();i++)
         {
             if(gamePlayers.at(i)->nameP == player.nameP)
@@ -25,6 +31,7 @@ namespace coup{
     }
 
     std::vector<std::string> Game::players() {
+        // return all the names of all the players that are alive
         std::vector<std::string> names;
         for(const auto & gamePlayer : this->gamePlayers)
         {
@@ -36,20 +43,8 @@ namespace coup{
         return names;
     }
 
-    std::string Game::turn() {
-        std::string turn;
-        for(auto & p: this->gamePlayers)
-        {
-            if(p->nameP == this->currentPlayer)
-            {
-                turn = p->nameP;
-                return p->nameP;
-            }
-        }
-        return turn;
-    }
-
     Game &Game::operator=(const Game& other) {
+        //used to copy a game in the player
         for(const auto & gamePlayer : other.gamePlayers)
         {
             this->gamePlayers.push_back(gamePlayer);
@@ -61,6 +56,9 @@ namespace coup{
     }
 
     void Game::moveTurn() {
+        /*
+         * to move turn to determine which player is playing now
+         */
         if(!this->isStarted)
         {
             this->isStarted = true;
@@ -85,6 +83,7 @@ namespace coup{
                 }
                 else
                 {
+                    // if the player is assassinated, go past him
                     if(this->gamePlayers.at(i+1)->state.rfind("assassinated",0) == 0)
                     {
                         if(i + 2 <= this->gamePlayers.size() -1)
@@ -108,13 +107,15 @@ namespace coup{
     }
 
     void Game::addPlayer(Player& player) {
+        //adding a new player to the game
+        // checking all the conditions (max players, if the game started already)
         if(this->gamePlayers.size() == MAX_PLAYERS)
         {
             throw std::logic_error("cant have more then 6 players");
         }
         if(this->isStarted)
         {
-            throw std::logic_error("cant had players in the middle of the game");
+            throw std::logic_error("cant add players in the middle of the game");
 
         }
         this->gamePlayers.push_back(&player);
@@ -122,6 +123,7 @@ namespace coup{
     }
 
     std::string Game::winner() {
+        //used to determine the winner of the game
         if(this->currentTurn == 1)
         {
             throw std::logic_error("game didnt start");
@@ -152,9 +154,11 @@ namespace coup{
         return this->gamePlayers;
     }
     bool Game::checkNameAndState(const std::string& toFind,Player& toCheck){
+        //function for any_of
         return toFind == toCheck.nameP && toCheck.state == "alive";
     }
     bool Game::checkInGame(Player& player) {
+        // check if a player is in the game and alive
         //return std::any_of(this->gamePlayers.begin(),this->gamePlayers.end(),[&player](Player play){return checkNameAndState(player.nameP,play);});
         for(auto &play:this->gamePlayers)
         {

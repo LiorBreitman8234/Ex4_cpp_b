@@ -7,8 +7,6 @@
 #include "Player.hpp"
 namespace coup{
     class Duke: public Player{
-
-
     public:
         Duke(Game& game, std::string name);
         static void block(Player& player);

@@ -8,7 +8,6 @@
 namespace coup{
     class Assassin: public Player{
     public:
-        std::string lastKilled;
         Assassin(Game& game, std::string name);
         void coup(Player &player) override;
     };

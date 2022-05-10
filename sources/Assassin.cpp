@@ -21,16 +21,16 @@ namespace coup{
         }
         if(this->currentCoins >= COUP)
         {
+            //kill the player and remove him
             this->currentCoins -= COUP;
             this->lastAction = "kill";
-            this->lastKilled = player.nameP;
             this->game.killPlayer(player);
         }
         else
         {
+            //assassinate player and set his stat to assassinated
             this->currentCoins -= ASSASSINATION;
             this->lastAction = "assassination";
-            this->lastKilled = player.nameP;
             player.setState("assassinated by " + this->nameP);
         }
         this->game.moveTurn();

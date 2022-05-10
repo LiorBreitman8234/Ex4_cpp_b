@@ -20,12 +20,12 @@ namespace coup{
     class Game;
     class Player{
     public:
-        std::string state;
+        std::string state;//used to check if the player is assassinated or alive (killed players are removed)
         Game& game;
-        std::string nameP;
-        std::string roleP;
+        std::string nameP;//used to check the current turn in the game
+        std::string roleP;//used to check the role of the player
         int currentCoins;
-        std::string lastAction;
+        std::string lastAction;//used to check if the action can be manipulated or not
         Player(Game& game, std::string name):currentCoins(0), game(game),nameP(std::move(name)),state("alive"){};
         void income();
         void foreign_aid();

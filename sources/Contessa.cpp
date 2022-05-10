@@ -14,6 +14,9 @@ namespace coup
     }
 
     void Contessa::block(Player &player) {
+        /*
+         * check if the player is an assassin and his last action is actually assassination
+         */
         if(player.roleP != "Assassin"){
             throw std::logic_error("cant stop player that is not assassin");
         }
@@ -24,7 +27,7 @@ namespace coup
         std::vector<Player*> players = this->game.getPlayers();
         for(auto & playerV : players)
         {
-            // removing the players assassinated by this player from the game
+            // setting the state of the player assassinated to alive,so he can play
             if(playerV->state == "assassinated by "+ player.nameP)
             {
                 playerV->setState("alive");

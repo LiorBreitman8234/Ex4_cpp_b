@@ -5,14 +5,17 @@
 namespace coup {
     void Captain::block(Player &player) {
         this->game.checkTurn(*this);
+        //check if the player can actually block
         if (player.roleP != "Captain") {
             throw std::logic_error("can only block a captain");
         }
         if (player.lastAction.rfind("steal",0) == 0) {
+            //get the amount to give back
             int amountStolen = player.lastAction.at(INDEX_OF_STEAL_AMOUNT) - '0';
             player.currentCoins -= amountStolen;
             for(auto& play: this->game.getPlayers())
             {
+                //finding the player to return the coins to
                 if(play->nameP == player.lastAction.substr(INDEX_OF_STEAL_NAME))
                 {
                     play->currentCoins += amountStolen;
@@ -25,10 +28,12 @@ namespace coup {
 
     void Captain::steal(Player &player) {
         this->game.checkTurn(*this);
+        //check if the player can steal
         if(this->currentCoins >= MUST_COUP)
         {
             throw std::logic_error("more then 10 coins, must coup");
         }
+        //cases are the amount of coins the player to steal from has
         switch (player.currentCoins) {
             case 1:
                 this->currentCoins += 1;

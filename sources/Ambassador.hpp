@@ -7,8 +7,6 @@
 #include "Player.hpp"
 namespace coup{
     class Ambassador : public Player{
-
-
     public:
         Ambassador(Game & game, std::string name);
         void block(Player& player);

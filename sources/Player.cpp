@@ -26,6 +26,19 @@ namespace coup{
         {
             throw std::logic_error("more then 10 coins, must coup");
         }
+        if(this->roleP == "Assassin")
+        {
+            //remove all the players that this player assassinated in the last round
+            std::vector<Player*> players = this->game.getPlayers();
+            for(auto & playerV : players)
+            {
+                // removing the players assassinated by in the last round this player from the game
+                if(playerV->state == "assassinated by " + this->nameP)
+                {
+                    this->game.killPlayer(*playerV);
+                }
+            }
+        }
         this->currentCoins += 2;
         this->lastAction = "foreign_aid";
         this->game.moveTurn();
@@ -36,6 +49,19 @@ namespace coup{
         if(this->currentCoins >= MUST_COUP)
         {
             throw std::logic_error("more then 10 coins, must coup");
+        }
+        if(this->roleP == "Assassin")
+        {
+            //remove all the players that this player assassinated in the last round
+            std::vector<Player*> players = this->game.getPlayers();
+            for(auto & playerV : players)
+            {
+                // removing the players assassinated by in the last round this player from the game
+                if(playerV->state == "assassinated by " + this->nameP)
+                {
+                    this->game.killPlayer(*playerV);
+                }
+            }
         }
         this->currentCoins += 1;
         this->lastAction = "income";

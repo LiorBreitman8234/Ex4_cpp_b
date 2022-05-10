@@ -23,13 +23,11 @@ namespace coup{
         std::string currentPlayer;
         Game():gamePlayers(std::vector<Player*>()),countPlayers(0),currentTurn(1),isStarted(false){};
         bool checkInGame(Player& player);
-        int getTurn() const{return currentTurn;};
         static bool checkNameAndState(const std::string& toFind,Player& toCheck);
         void addPlayer(Player& player);
         void checkTurn(const Player& player) const;
         std::vector<std::string> players();
         void killPlayer(Player& player);
-        std::string turn();
         void moveTurn();
         std::string winner();
         std::vector<Player*> getPlayers();
