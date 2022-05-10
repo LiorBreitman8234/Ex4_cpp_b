@@ -14,6 +14,10 @@ namespace coup{
         {
             throw std::logic_error("no coins to transfer");
         }
+        if(!this->game.checkInGame(takeFrom) || !this->game.checkInGame(giveTo))
+        {
+            throw std::logic_error("one or more of the players targeted is dead");
+        }
         //transfer the coins
         takeFrom.currentCoins-= 1;
         giveTo.currentCoins +=1;
